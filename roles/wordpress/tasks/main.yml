@@ -5,7 +5,6 @@
     dest: /var/www/
     remote_src: yes
 
-
 # - name: Extract wordpress file
 #   unarchive:
 #     src: /tmp/wordpress.tar.gz
@@ -21,13 +20,31 @@
     mode: "755"
     recurse: yes
 
-- name: Add wp-config.php
-  template:
-    src: ../templates/wp-config.php.j2
-    dest: /var/www/wordpress/wp-config.php
-    owner: www-data
-    group: www-data
-    mode: "644"
+- name: Replace database name in wp-config.php
+  replace:
+    path: "/var/www/wordpress/wp-config.php"
+    regexp: "database_name_here"
+    replace: "{{app_db_name}}"
+
+- name: Replace database username in wp-config.php
+  replace:
+    path: "/var/www/wordpress/wp-config.php"
+    regexp: "username_here"
+    replace: "{{db_admin_user}}"
+
+- name: Replace database password in wp-config.php
+  replace:
+    path: "/var/www/wordpress/wp-config.php"
+    regexp: "password_here"
+    replace: "{{db_admin_password}}"
+
+# - name: Add wp-config.php
+#   template:
+#     src: ../templates/wp-config.php.j2
+#     dest: /var/www/wordpress/wp-config.php
+#     owner: www-data
+#     group: www-data
+#     mode: "644"
 
 - name: Change the default nginx sites available file
   template:
