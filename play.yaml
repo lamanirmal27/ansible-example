@@ -1,0 +1,14 @@
+---
+- name: LEMP stack setup
+  hosts: myhosts
+  become: yes
+
+  roles:
+    - nginx
+    - mysql
+    - php
+    - pma
+    - wordpress
+    - certbot
+
+      

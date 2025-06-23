@@ -1,0 +1,14 @@
+---
+- name: Install nginx
+  apt: 
+    name: nginx
+    state: latest
+
+- name: Ensure nginx is running
+  systemd: 
+    name: nginx
+    state: started
+    enabled: yes
+  notify: restart nginx
+
+
